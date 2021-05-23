@@ -1,9 +1,64 @@
+// import logo from './logo.svg';
+// import './App.css';
+// import { useEffect } from 'react'
+// // import { useDispatch, useSelector } from 'react-redux'
+// import { connect } from 'react-redux'
+
+// function App(props) {
+
+//   // const dispatch = useDispatch()
+//   // const characters = useSelector(state => state.characters)
+
+
+
+//   function showCharacters(){
+//     return props.characters.map(character => <h1>{character.name}</h1>)
+//   }
+
+//   useEffect(getCharacters, [])
+
+//   function getCharacters(){
+//     fetch('https://rickandmortyapi.com/api/character/?page=7')
+//       .then(response => response.json())
+//       .then(({results}) => props.setCharacters(results))
+//   }
+//   return (
+//     <div className="App">
+//       {showCharacters()}
+//     </div>
+//   );
+// }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     characters: state.characters
+//   }
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     setCharacters: (characters) => dispatch({type: "SET_CHARACTERS", characters}) 
+//   }
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
+
+// with hooks!!!!
+
 import logo from './logo.svg';
 import './App.css';
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { SET_CHARACTERS } from './Redux/types'
 
 function App() {
+  
+  const actionCreator = (characters) => ({
+    type: SET_CHARACTERS,
+    characters
+  })
 
   const dispatch = useDispatch()
   const characters = useSelector(state => state.characters)
@@ -17,10 +72,7 @@ function App() {
   function getCharacters(){
     fetch('https://rickandmortyapi.com/api/character/?page=7')
       .then(response => response.json())
-      .then(({results}) => dispatch({
-        type: "SET_CHARACTERS", 
-        characters: results 
-      }))
+      .then(({results}) => dispatch(actionCreator(results)))
   }
   return (
     <div className="App">
